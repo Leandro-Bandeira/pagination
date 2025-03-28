@@ -6,10 +6,11 @@
 
 class Fifo{
   public:
-    Fifo(std::vector <int> &referencies)
-      :referencies(referencies) {}
-     void algorithm();   
+    Fifo(std::vector <int> &referencies, int frames)
+      :referencies(referencies), frames(frames) {}
+     int algorithm();   
   private:
       std::vector <int> referencies;
+      int frames;
 };
 #endif FIFO_H
