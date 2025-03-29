@@ -13,4 +13,4 @@ class Fifo{
       std::vector <int> referencies;
       int frames;
 };
-#endif FIFO_H
+#endif

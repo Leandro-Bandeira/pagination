@@ -3,6 +3,8 @@
 #include <vector>
 #include "../utils/InstanceReader.hpp"
 #include "Fifo.hpp"
+#include "LRU.hpp"
+
 
 int main(int argc, char** argv){  
     InstanceReader reader; // Cria um objeto da classe InstanceReader para ler a instância  
@@ -17,9 +19,14 @@ int main(int argc, char** argv){
     }
     
     /* Fifo algorithm */
-    Fifo fifo(referencies, frames);
+    // Fifo fifo(referencies, frames);
 
-    int count_missed_pages = fifo.algorithm();
-    std::cout << "FIFO: " << count_missed_pages << "\n";
-    
+    // int count_missed_pages = fifo.algorithm();
+    //std::cout << "FIFO: " << count_missed_pages << "\n";
+
+    /* LRU algorithm */
+    LRU lru(referencies, frames);
+
+    int count_missed_page = lru.algorithm();
+        
 }
