@@ -1,4 +1,6 @@
 #include "OTM.hpp"
+#include <iostream>
+#include <algorithm>
 
 
 int Otm::algorithm(){
@@ -15,6 +17,15 @@ int Otm::algorithm(){
 
         bool finded = 0;
         int has_space = -1;
+
+        //debug
+        // std::cout << "memoria: ";
+        // for(int j = 0; j < frames; j++){
+            
+        //     std::cout << memory[j] << " ";
+        // }
+        // cout << " " << std::endl;
+
         for(int j = 0; j < frames; j++){
             
             if(reference == memory[j]){
@@ -37,21 +48,28 @@ int Otm::algorithm(){
             memory[has_space] = reference;
 
         }else{  //nao tem espaco vazio, tem q substituir uma referencia já exisente
+            int order_references[frames]; 
 
-            int counter_references[frames] = {};  //inicalizando o vetor de contadores com 0
-            for(int j : memory){
-                for(int k = i+1; k < references.size(); k++){
+            for(int j = 0; j < frames; j++){
+                order_references[j] = 9999999;         //pra ele ser escolhido se nao for chamado pq significa q ele nunca apareceu mais
+            }
+
+            for(int j = 0; j < frames; j++){
+                int counter = 0;
+                for(int k = i+1; k < references.size(); k++){  //começamos do ponto que estamos em frente (i+1)
 
                     if(memory[j] == references[k]){
-                        counter_references[j] += 1;
+                        order_references[j] = counter;
+                        break;
                     }
+                    counter++;
                 }
             }
             
-            int size = sizeof(counter_references) / sizeof(counter_references[0]);
-            int* maxPtr = std::min_element(counter_references, counter_references + size);  //encontra o menor numero no array
-            int index = maxPtr - counter_references;  
-            memory[index] = reference; //substituo a pagina que terá menos referencias no futuro pela a que precisa entrar agora    
+            int size = sizeof(order_references) / sizeof(order_references[0]);
+            int* maxPtr = std::max_element(order_references, order_references + size);  //encontra o maior numero no array (o que demorará mais pra aparecer)
+            int index = maxPtr - order_references;
+            memory[index] = reference; //substituo a pagina que terá a referencia mais distante no futuro pela a que precisa entrar agora    
         }
     }
 
