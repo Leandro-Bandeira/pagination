@@ -7,7 +7,6 @@ int Fifo::algorithm(){
   fifo.clear();
   int max_value = *std::max_element(referencies.begin(), referencies.end());
 
-  std::cout << "maxValue:" << max_value << "\n";
    /* Vector responsável por indicar se o valor está na página */
   std::vector<int> inPage(max_value + 1, 0);
 
@@ -16,10 +15,8 @@ int Fifo::algorithm(){
   // Indice que percorre o vetor FIFO
   int indice_to_remove = 0;
   
-  std::cout << "---------------------" << "\n";
   for (int i = 0; i < referencies.size(); i++){
-    std::cout << "referencie: " << referencies[i] << "\n";
-    std::cout << "InPage: " << inPage[referencies[i]] << "\n";
+
     /* Se nao preenchemos todos os frames, temos todos em falta de pagina */
     if (count_missed_page < frames){
       if (!inPage[referencies[i]]) {
@@ -34,8 +31,6 @@ int Fifo::algorithm(){
       */
       if(!inPage[referencies[i]]) {
         int value_removed = fifo[indice_to_remove];
-        std::cout << "value removed: " << value_removed << "\n";
-        std::cout << "value entrando: " << referencies[i] << "\n";
         fifo[indice_to_remove] = referencies[i];
         indice_to_remove = (indice_to_remove + 1) % frames;
         inPage[value_removed] = 0;
@@ -43,9 +38,7 @@ int Fifo::algorithm(){
         count_missed_page++;
       }
     }
-    std::cout << "count_missed_page: " <<  count_missed_page << "\n";
        
-  
   }
 
   return count_missed_page;
